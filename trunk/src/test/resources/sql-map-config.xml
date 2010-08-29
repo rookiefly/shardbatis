@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
+    "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+	<settings cacheModelsEnabled="false" enhancementEnabled="true"
+		lazyLoadingEnabled="true" errorTracingEnabled="true"  useStatementNamespaces="true" />
+	<shardingConfig>
+		<sharding tableName="app_test" strategyClass="com.ibatis.sqlmap.engine.sharding.impl.DefaultShardingStrategy"/>
+		<sharding tableName="app_2test" />
+	</shardingConfig>
+
+	<transactionManager type="JDBC">
+		<!-- dataSource type="SIMPLE">
+		<property name="JDBC.Driver" value="org.h2.Driver"/>
+		<property name="JDBC.ConnectionURL" value="jdbc:h2:tcp://localhost/~/sharebatis"/>
+		<property name="JDBC.Username" value="sa"/>
+		<property name="JDBC.Password" value=""/>
+		</dataSource-->
+		<dataSource type="DBCP">
+		<property name="JDBC.Driver" value="org.h2.Driver"/>
+		<property name="JDBC.ConnectionURL" value="jdbc:h2:tcp://localhost/~/sharebatis"/>
+		<property name="JDBC.Username" value="sa"/>
+		<property name="JDBC.Password" value=""/>
+		<property name="Pool.MaximumActiveConnections" value="30"/>
+		</dataSource>
+	</transactionManager>
+			
+ 	<sqlMap resource="AppTest.xml" />
+</sqlMapConfig>
