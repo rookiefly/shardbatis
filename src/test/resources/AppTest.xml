@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="AppTest">
+	<typeAlias alias="AppTest" type="org.shardbatis.test.AppTest"/>
+	
+	<resultMap class="AppTest" id="RM_AppTest">
+		<result column="ID" jdbcType="INTEGER" property="id" />
+		<result column="CNT" jdbcType="VARCHAR" property="cnt" />
+	</resultMap>
+	
+	<sql id="condition">
+		<isNotEmpty prepend="and" property="cnt">
+		  CNT = #cnt:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="id">
+		  ID = #id:INTEGER#
+		</isNotEmpty>
+	</sql>
+	
+	<sql id="condition_all">
+		<isNotEmpty prepend="and" property="cnt">
+		  CNT = #cnt:VARCHAR#
+		</isNotEmpty>
+	</sql>
+	
+	<select id="select" parameterClass="java.lang.Integer" resultMap="RM_AppTest">
+   		select 
+				ID,CNT
+	    from app_test
+	    <isParameterPresent>
+    	where ID = #value:INTEGER# and DELETED='N'
+    	</isParameterPresent>
+   </select>
+   
+   <select id="select_by_condition" parameterClass="AppTest" resultMap="RM_AppTest">
+       select 	
+				ID,CNT
+		from app_test 
+	    <dynamic prepend="where">
+	        <include refid="condition" />
+	    </dynamic>
+    </select>
+   
+   <insert id="insert" parameterClass="AppTest">
+		insert into app_test (ID
+		<isNotEmpty prepend="," property="cnt">
+		  CNT
+		</isNotEmpty>
+		)
+		values (#id:INTEGER#
+		<isNotEmpty prepend="," property="cnt" >
+		  #cnt:VARCHAR#
+		</isNotEmpty>
+		)
+		<selectKey resultClass="int" keyProperty="id" >
+		SELECT @@IDENTITY AS ID
+		</selectKey>
+	</insert>
+	
+	<insert id="insert_h2" parameterClass="AppTest">
+		<selectKey resultClass="int" keyProperty="id" >
+		select seq_app_test_id.nextval
+		</selectKey>
+		insert into app_test (ID
+		<isNotEmpty prepend="," property="cnt">
+		  CNT
+		</isNotEmpty>
+		)
+		values (#id:INTEGER#
+		<isNotEmpty prepend="," property="cnt" >
+		  #cnt:VARCHAR#
+		</isNotEmpty>
+		)
+	</insert>
+	
+	<insert id="insert_h2_flag" parameterClass="AppTest">
+		<selectKey resultClass="int" keyProperty="id" >
+		select seq_app_test_id.nextval
+		</selectKey>
+		insert into @{app_test} (ID
+		<isNotEmpty prepend="," property="cnt">
+		  CNT
+		</isNotEmpty>
+		)
+		values (#id:INTEGER#
+		<isNotEmpty prepend="," property="cnt" >
+		  #cnt:VARCHAR#
+		</isNotEmpty>
+		)
+	</insert>
+	
+	<update id="update" parameterClass="AppTest">
+		update app_test set 
+		<isNotEmpty  property="cnt" >
+		  CNT = #cnt:VARCHAR#
+		</isNotEmpty>
+		where ID = #id:INTEGER#
+	</update>
+	
+	<delete id="delete" parameterClass="AppTest">
+		delete from app_test 
+		<dynamic prepend="where">
+	      	<include refid="condition" />
+	    </dynamic>
+	</delete>
+   
+	<select id="select_paging" parameterClass="java.util.Map" resultMap="RM_AppTest">
+	    select 
+				CNT
+	    from app_test  where DELETED = 'N'
+	      <dynamic prepend="and">
+	      	<include refid="condition" />
+	      </dynamic>
+	      <isNotNull property="orderByClause">
+	        order by $orderByClause$
+	      </isNotNull>
+	  </select>
+	  
+	 <select id="select_paging_count" parameterClass="AppTest" resultClass="java.lang.Integer">
+	 	select count(*) from app_test
+	      <dynamic prepend="where">
+	      	<include refid="condition" />
+	      </dynamic>
+	 </select>
+	 
+	 <select id="select_paging_count_by_map" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+	 	select count(*) from app_test  where DELETED = 'N'
+	      <dynamic prepend="and">
+	      	<include refid="condition" />
+	      </dynamic>
+	 </select>
+	 
+	 <select id="select_perf_shardding" parameterClass="AppTest" resultClass="java.lang.Integer">
+	 	select count(*) from app_test  a where a.id in (select id from app_test where cnt like CONCAT(#cnt:VARCHAR#,'%'))
+	 </select>
+	 
+	 <select id="select_perf" parameterClass="AppTest" resultClass="java.lang.Integer">
+	 	select count(*) from app_test  a where a.id in (select id from app_test where cnt like CONCAT(#cnt:VARCHAR#,'%'))
+	 </select>
+	 
+	 <select id="select_perf_flag" parameterClass="AppTest" resultClass="java.lang.Integer">
+	 	select count(*) from @{app_test}  a where a.id in (select id from @{app_test} where cnt like CONCAT(#cnt:VARCHAR#,'%'))
+	 </select>
+</sqlMap>
