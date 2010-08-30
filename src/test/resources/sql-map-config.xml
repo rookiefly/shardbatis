@@ -5,7 +5,9 @@
 	<settings cacheModelsEnabled="false" enhancementEnabled="true"
 		lazyLoadingEnabled="true" errorTracingEnabled="true"  useStatementNamespaces="true" />
 	<shardingConfig>
+		<!-- 对于app_test使用默认的切分策略,默认的切分策略只是简单按数值取模生成新的表名,如何实现切分策略后面再介绍 -->
 		<sharding tableName="app_test" strategyClass="com.ibatis.sqlmap.engine.sharding.impl.DefaultShardingStrategy"/>
+		<!-- 没有配置切分策略等于使用默认的切分策略 -->
 		<sharding tableName="app_2test" />
 	</shardingConfig>
 
