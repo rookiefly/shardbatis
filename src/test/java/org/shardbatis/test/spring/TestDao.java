@@ -9,6 +9,7 @@ import org.shardbatis.spring.orm.SqlMapClientWithShardingTemplate;
 import com.ibatis.sqlmap.engine.sharding.ShardingFactorGroup;
 
 /**
+ * 应用的DAO要继承SqlMapClientWithShardingDaoSupport
  * @author sean.he
  *
  */
