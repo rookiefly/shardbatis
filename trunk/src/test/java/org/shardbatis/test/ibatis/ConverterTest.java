@@ -222,6 +222,13 @@ public class ConverterTest {
 		ret=factory.convert(sql, group,group1,group2);
 		//System.out.println(ret);
 		Assert.assertEquals(expect, ret);
+		
+		sql="SELECT a.* FROM ANTIQUES a,ANTIQUEOWNERS b, mytable c where a.id=b.id and b.id=c.id";
+		expect="SELECT a.* FROM ANTIQUES_0 AS a, ANTIQUEOWNERS_1 AS b, mytable_1 AS c WHERE a.id = b.id AND b.id = c.id";
+		ret=factory.convert(sql, group,group1,group2);
+		//System.out.println(ret);
+		Assert.assertEquals(expect, ret);
+		
 	}
 	
 	@Test
