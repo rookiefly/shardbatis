@@ -149,7 +149,10 @@
 	 
 	 <select id="select_count_native" parameterClass="AppTest" resultClass="java.lang.Integer" 
 	 shardingParams='[{"paramExpr":"testId","tableName":"app_test"}]'>
-	 	select count(*) from app_test where cnt=#cnt#
+	 	select count(*) from app_test
+		<dynamic prepend="where">
+	      	<include refid="condition" />
+	      </dynamic>
 	 </select>
 	 
 	 <insert id="insert_h2_native" parameterClass="AppTest"
