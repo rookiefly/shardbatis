@@ -40,6 +40,12 @@ public class SqlMapClientTest {
 		Integer count = (Integer) sqlMapper.queryForObject(
 				"AppTest.select_paging_count_by_map", param);
 		Assert.assertEquals(count.toString(), "0");
+		
+		AppTest at1 = new AppTest();
+		at1.setCnt("test_cnt");
+		at1.setId(1);
+		count = (Integer) sqlMapper.queryForObject(
+				"AppTest.select_perf_native", at1);
 	}
 
 	@Test
@@ -166,6 +172,44 @@ public class SqlMapClientTest {
 		Assert.assertEquals("1", count.toString());
 		count = (Integer) sqlMapper.queryForObject(
 				"AppTest.select_paging_count", new AppTest());
+		Assert.assertEquals("1", count.toString());
+	}
+	
+	@Test
+	public void testShardingWithConfig() throws SQLException{
+		AppTest param=new AppTest();
+		param.setTestId(2);
+		param.setCnt("testShardingWithConfig");
+		Integer id=(Integer)sqlMapper.insert("AppTest.insert_h2_native", param);
+		Integer count=(Integer)sqlMapper.queryForObject("AppTest.select_count_native",param);
+		Assert.assertEquals("1", count.toString());
+		
+		param.setCnt("newCnt");
+		count=(Integer)sqlMapper.update("AppTest.update_native", param);
+		Assert.assertEquals("1", count.toString());
+		
+		param=new AppTest();
+		param.setId(id);
+		param.setTestId(2);
+		count=(Integer)sqlMapper.delete("AppTest.delete_native", param);
+		Assert.assertEquals("1", count.toString());
+	}
+	@Test
+	public void testApiCoverConfig() throws SQLException{
+		ShardingFactorGroup g = new ShardingFactorGroup();
+		g.setTableName("App_Test");
+		g.setParam(new Integer(123));
+		
+		AppTest param=new AppTest();
+		param.setTestId(2);
+		param.setCnt("testApiCoverConfig");
+		
+		Integer id=(Integer)sqlMapper.insertWithSharding("AppTest.insert_h2_native", param,g);
+		
+		param=new AppTest();
+		param.setId(id);
+		Integer count = (Integer) sqlMapper.queryForObjectWithSharding(
+				"AppTest.select_paging_count", param, g);
 		Assert.assertEquals("1", count.toString());
 	}
 }

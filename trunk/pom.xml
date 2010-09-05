@@ -4,7 +4,7 @@
 
   <groupId>org.sharebatis</groupId>
   <artifactId>sharebatis</artifactId>
-  <version>0.9B</version>
+  <version>0.9.1B</version>
   <packaging>jar</packaging>
 
   <name>sharebatis</name>
@@ -78,6 +78,17 @@
       <version>3.0.3.RELEASE</version>
       <scope>test</scope>
     </dependency>
+    <!-- 
+    <dependency>
+	  <groupId>org.mvel</groupId>
+	  <artifactId>mvel2</artifactId>
+	  <version>2.0.17</version>
+	</dependency> -->
+	<dependency>
+	    <groupId>org.codehaus.jackson</groupId>
+	    <artifactId>jackson-mapper-asl</artifactId>
+	    <version>1.5.6</version>
+	</dependency>
     
     <dependency>
 		<groupId>commons-dbcp</groupId>

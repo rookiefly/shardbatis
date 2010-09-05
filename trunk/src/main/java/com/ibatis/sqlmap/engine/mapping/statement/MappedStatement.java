@@ -27,6 +27,7 @@ import com.ibatis.sqlmap.engine.mapping.sql.Sql;
 import com.ibatis.sqlmap.engine.scope.ErrorContext;
 import com.ibatis.sqlmap.engine.scope.StatementScope;
 import com.ibatis.sqlmap.engine.sharding.ShardingException;
+import com.ibatis.sqlmap.engine.sharding.ShardingFactorConfig;
 import com.ibatis.sqlmap.engine.sharding.ShardingFactorGroup;
 import com.ibatis.sqlmap.engine.sharding.converter.ConverterFactory;
 import com.ibatis.sqlmap.engine.sharding.converter.SqlConvertHelper;
@@ -34,6 +35,7 @@ import com.ibatis.sqlmap.engine.transaction.Transaction;
 import com.ibatis.sqlmap.engine.transaction.TransactionException;
 import com.ibatis.sqlmap.engine.type.*;
 import com.ibatis.sqlmap.engine.cache.*;
+import com.ibatis.sqlmap.engine.config.ShardingConfig;
 import com.ibatis.sqlmap.engine.impl.*;
 import org.w3c.dom.Document;
 
@@ -57,6 +59,7 @@ public class MappedStatement {
   private ResultMap[] additionalResultMaps = new ResultMap[0];
   private List executeListeners = new ArrayList();
   private String resource;
+  private List<ShardingFactorConfig> shardingParams;//sean add
 
   public StatementType getStatementType() {
     return StatementType.UNKNOWN;
@@ -93,7 +96,7 @@ public class MappedStatement {
       errorContext.setMoreInfo("Check the SQL statement.");
       String sqlString = sql.getSql(statementScope, parameterObject);
       // convert table name for sharding
-      sqlString=this.convertSql(sqlString, statementScope);
+      sqlString=this.convertSql(sqlString, statementScope,parameterObject);
       
       errorContext.setActivity("executing mapped statement");
       errorContext.setMoreInfo("Check the statement or the result map.");
@@ -121,19 +124,35 @@ public class MappedStatement {
    * @author Sean
    * @param sql
    * @param statementScope
+   * @param parameterObject
    * @return
    * @throws ShardingException
    */
-  protected String convertSql(String sql,StatementScope statementScope) throws ShardingException{
+  protected String convertSql(String sql,StatementScope statementScope,Object parameterObject) throws ShardingException{
 	  if(this instanceof SelectKeyStatement){
 		  return sql;
 	  }
 	  ShardingFactorGroup[] groups=statementScope.getSession().getCurrentShardingFactors();
-	  if(groups==null||groups.length==0){
-		  return sql;
-	  }
 	  ConverterFactory factory = ConverterFactory.getInstance();
-	  return factory.convert(sql, groups);
+	  if(groups!=null&&groups.length>0){
+		  //conver sql with api params
+		  return factory.convert(sql, groups);
+	  }
+	//conver sql with config params
+	  if(shardingParams!=null&&shardingParams.size()>0){
+		  List<ShardingFactorGroup> list=new ArrayList<ShardingFactorGroup>();
+		  for(ShardingFactorConfig config:shardingParams){
+			  ShardingConfig sc= this.sqlMapClient.getDelegate().getShardingConfig(config.getTableName());
+			  ShardingFactorGroup grp=config.transform(sc, parameterObject);
+			  if(grp!=null){
+				  list.add(grp);
+			  }
+		  }
+		  groups=list.toArray(new ShardingFactorGroup[0]);
+		  return factory.convert(sql, groups);
+	  }
+	 
+	  return sql;
   }
 
   public Object executeQueryForObject(StatementScope statementScope, Transaction trans, Object parameterObject, Object resultObject)
@@ -208,7 +227,7 @@ public class MappedStatement {
       errorContext.setMoreInfo("Check the SQL statement.");
       String sqlString = sql.getSql(statementScope, parameterObject);
       // convert table name for sharding
-      sqlString=this.convertSql(sqlString, statementScope);
+      sqlString=this.convertSql(sqlString, statementScope,parameterObject);
       
       errorContext.setActivity("executing mapped statement");
       errorContext.setMoreInfo("Check the SQL statement or the result map.");
@@ -415,4 +434,12 @@ public class MappedStatement {
   public ResultMap[] getAdditionalResultMaps() {
     return additionalResultMaps;
   }
+
+	public List<ShardingFactorConfig> getShardingParams() {
+		return shardingParams;
+	}
+	
+	public void setShardingParams(List<ShardingFactorConfig> shardingParams) {
+		this.shardingParams = shardingParams;
+	}
 }

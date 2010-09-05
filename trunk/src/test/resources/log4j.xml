@@ -22,8 +22,8 @@
 	</logger>  -->
 	
 	<logger name="java.sql">
-		<!--<level value="DEBUG" /> -->
-		 <level value="INFO" />
+		<level value="DEBUG" />
+		<!-- <level value="INFO" /> -->
 	</logger>
 
 	<!-- 整体默认为WARN级别  -->

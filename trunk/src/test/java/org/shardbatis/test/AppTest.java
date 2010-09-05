@@ -14,6 +14,7 @@ public class AppTest implements Serializable{
 	private static final long serialVersionUID = 5594372943378452480L;
 	private String cnt;
 	private Integer id;
+	private Integer testId;
 
 	public Integer getId() {
 		return id;
@@ -27,5 +28,13 @@ public class AppTest implements Serializable{
 	}
 	public void setCnt(String cnt) {
 		this.cnt = cnt;
+	}
+
+	public Integer getTestId() {
+		return testId;
+	}
+
+	public void setTestId(Integer testId) {
+		this.testId = testId;
 	}
 }
