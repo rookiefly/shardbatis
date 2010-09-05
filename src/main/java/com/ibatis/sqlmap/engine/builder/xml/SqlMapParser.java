@@ -1,15 +1,27 @@
 package com.ibatis.sqlmap.engine.builder.xml;
 
-import com.ibatis.common.xml.*;
-import com.ibatis.common.resources.*;
-import com.ibatis.sqlmap.client.*;
-import com.ibatis.sqlmap.engine.config.*;
-import com.ibatis.sqlmap.engine.mapping.statement.*;
-import com.ibatis.sqlmap.engine.cache.*;
+import java.io.InputStream;
+import java.io.Reader;
+import java.util.Properties;
+
 import org.w3c.dom.Node;
 
-import java.io.*;
-import java.util.Properties;
+import com.ibatis.common.resources.Resources;
+import com.ibatis.common.xml.Nodelet;
+import com.ibatis.common.xml.NodeletException;
+import com.ibatis.common.xml.NodeletParser;
+import com.ibatis.common.xml.NodeletUtils;
+import com.ibatis.sqlmap.client.SqlMapException;
+import com.ibatis.sqlmap.engine.cache.CacheController;
+import com.ibatis.sqlmap.engine.config.CacheModelConfig;
+import com.ibatis.sqlmap.engine.config.ParameterMapConfig;
+import com.ibatis.sqlmap.engine.config.ResultMapConfig;
+import com.ibatis.sqlmap.engine.mapping.statement.DeleteStatement;
+import com.ibatis.sqlmap.engine.mapping.statement.InsertStatement;
+import com.ibatis.sqlmap.engine.mapping.statement.MappedStatement;
+import com.ibatis.sqlmap.engine.mapping.statement.ProcedureStatement;
+import com.ibatis.sqlmap.engine.mapping.statement.SelectStatement;
+import com.ibatis.sqlmap.engine.mapping.statement.UpdateStatement;
 
 public class SqlMapParser {
 

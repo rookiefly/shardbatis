@@ -1,16 +1,32 @@
 package com.ibatis.sqlmap.engine.builder.xml;
 
-import com.ibatis.common.xml.*;
-import com.ibatis.common.resources.*;
-import com.ibatis.sqlmap.engine.config.*;
-import com.ibatis.sqlmap.engine.mapping.statement.*;
-import com.ibatis.sqlmap.client.*;
-import org.w3c.dom.CharacterData;
-import org.w3c.dom.*;
-
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
+import org.w3c.dom.CharacterData;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import com.ibatis.common.logging.Log;
+import com.ibatis.common.logging.LogFactory;
+import com.ibatis.common.resources.Resources;
+import com.ibatis.common.xml.NodeletUtils;
+import com.ibatis.sqlmap.client.SqlMapException;
+import com.ibatis.sqlmap.engine.config.MappedStatementConfig;
+import com.ibatis.sqlmap.engine.mapping.statement.MappedStatement;
+import com.ibatis.sqlmap.engine.sharding.ShardingConfigException;
+import com.ibatis.sqlmap.engine.sharding.ShardingFactorConfig;
+
 public class SqlStatementParser {
+  //sean add
+  private static final Log log = LogFactory.getLog(SqlStatementParser.class);
+  private static ObjectMapper mapper = new ObjectMapper();//jackson ObjectMapper  thread-safety
 
   private XmlParserState state;
 
@@ -33,6 +49,25 @@ public class SqlStatementParser {
     String fetchSize = attributes.getProperty("fetchSize");
     String allowRemapping = attributes.getProperty("remapResults");
     String timeout = attributes.getProperty("timeout");
+    //sean add
+    String shardingJson=attributes.getProperty("shardingParams");
+    //shardingParams's value like [{"paramExpr":"id","tableName":"app_test"},{"paramExpr":"id","tableName":"app_test2"}]
+    List<ShardingFactorConfig> configList=null;
+    if(shardingJson!=null&&shardingJson.trim().length()>0){
+	    try {
+	    	configList=mapper.readValue(shardingJson.trim(), new TypeReference<ArrayList<ShardingFactorConfig>>() { });
+		} catch (JsonParseException e) {
+			log.error(e.getMessage(), e);
+			throw new ShardingConfigException(e);
+		} catch (JsonMappingException e) {
+			log.error(e.getMessage(), e);
+			throw new ShardingConfigException(e);
+		} catch (IOException e) {
+			log.error(e.getMessage(), e);
+			throw new ShardingConfigException(e);
+		}
+    }
+    statement.setShardingParams(configList);
 
     if (state.isUseStatementNamespaces()) {
       id = state.applyNamespace(id);

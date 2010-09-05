@@ -232,6 +232,7 @@ fetchSize CDATA #IMPLIED
 xmlResultName CDATA #IMPLIED
 remapResults (true|false) #IMPLIED
 timeout CDATA #IMPLIED
+shardingParams CDATA #IMPLIED
 >
 
 <!--Statement used for select queries.
@@ -249,6 +250,7 @@ fetchSize CDATA #IMPLIED
 xmlResultName CDATA #IMPLIED
 remapResults (true|false) #IMPLIED
 timeout CDATA #IMPLIED
+shardingParams CDATA #IMPLIED
 >
 
 <!--Statement used for insert queries.
@@ -259,6 +261,7 @@ id CDATA #REQUIRED
 parameterMap CDATA #IMPLIED
 parameterClass CDATA #IMPLIED
 timeout CDATA #IMPLIED
+shardingParams CDATA #IMPLIED
 >
 
 <!--Many relational database systems support auto-generation of primary key fields. This feature of the
@@ -290,6 +293,7 @@ id CDATA #REQUIRED
 parameterMap CDATA #IMPLIED
 parameterClass CDATA #IMPLIED
 timeout CDATA #IMPLIED
+shardingParams CDATA #IMPLIED
 >
 
 <!--Statement used for delete queries.
@@ -300,6 +304,7 @@ id CDATA #REQUIRED
 parameterMap CDATA #IMPLIED
 parameterClass CDATA #IMPLIED
 timeout CDATA #IMPLIED
+shardingParams CDATA #IMPLIED
 >
 
 <!--The <procedure> statement element is used for Stored Procedures. The following example shows
