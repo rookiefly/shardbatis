@@ -211,5 +211,12 @@ public class SqlMapClientTest {
 		Integer count = (Integer) sqlMapper.queryForObjectWithSharding(
 				"AppTest.select_paging_count", param, g);
 		Assert.assertEquals("1", count.toString());
+		
+		param=new AppTest();
+		param.setId(id);
+		param.setTestId(1);
+		count = (Integer) sqlMapper.queryForObjectWithSharding(
+				"AppTest.select_count_native", param);
+		Assert.assertEquals("1", count.toString());
 	}
 }
