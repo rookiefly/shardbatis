@@ -1,0 +1,218 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.shardbatis</groupId>
+  <artifactId>shardbatis</artifactId>
+  <version>0.9.1B</version>
+  <packaging>jar</packaging>
+
+  <name>sharebatis</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    
+    <jdbc.test.driver>org.h2.Driver</jdbc.test.driver>
+    
+    <jdbc.test.url>jdbc:h2:tcp://localhost/~/sharebatis</jdbc.test.url>
+   <!-- <jdbc.test.url>jdbc:h2:mem:sharebatis;DB_CLOSE_DELAY=-1</jdbc.test.url>-->
+    <jdbc.test.user>sa</jdbc.test.user>
+	<jdbc.test.password></jdbc.test.password>
+	
+	<jdbc.test.driver.groupid>com.h2database</jdbc.test.driver.groupid>
+	<jdbc.test.driver.artifactId>h2</jdbc.test.driver.artifactId>
+	<jdbc.test.driver.version>1.2.140</jdbc.test.driver.version>
+	<db.schema.file>src/test/resources/initdb.sql</db.schema.file>
+  </properties>
+  
+  <!-- 设定除中央仓库(repo1.maven.org/maven2/)外的其他仓库,按设定顺序进行查找. -->
+	<repositories>
+		<repository>
+			<id>offical</id>
+			<name>Maven Offical Repository</name>
+			<url>http://repo1.maven.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+
+		<repository>
+			<id>jboss</id>
+			<name>jboss repository</name>
+			<url>http://repository.jboss.com/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<!-- 
+			for sun jars (eg.javax.transaction)
+			ses http://maven.apache.org/guides/mini/guide-coping-with-sun-jars.html
+		
+		<repository>
+          <id>maven2-repository.dev.java.net</id>
+          <name>Java.net Repository for Maven</name>
+          <url>http://download.java.net/maven/2/</url>
+          <layout>default</layout>
+        </repository>-->
+	</repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.8.1</version>
+      <scope>test</scope>
+    </dependency>
+
+	<dependency>
+		<groupId>${jdbc.test.driver.groupid}</groupId>
+		<artifactId>${jdbc.test.driver.artifactId}</artifactId>
+		<version>${jdbc.test.driver.version}</version>
+		<scope>test</scope>
+	</dependency>
+	
+	<dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>3.0.3.RELEASE</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- 
+    <dependency>
+	  <groupId>org.mvel</groupId>
+	  <artifactId>mvel2</artifactId>
+	  <version>2.0.17</version>
+	</dependency> -->
+	<dependency>
+	    <groupId>org.codehaus.jackson</groupId>
+	    <artifactId>jackson-mapper-asl</artifactId>
+	    <version>1.5.6</version>
+	</dependency>
+    
+    <dependency>
+		<groupId>commons-dbcp</groupId>
+		<artifactId>commons-dbcp</artifactId>
+		<version>1.2.2</version>
+		<scope>compile</scope>
+	</dependency>
+	
+	<dependency>
+		<groupId>commons-logging</groupId>
+		<artifactId>commons-logging</artifactId>
+		<version>1.1.1</version>
+		<scope>compile</scope>
+	</dependency>
+	
+	<dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		<version>1.2.16</version>
+		<scope>compile</scope>
+	</dependency>
+	
+	<dependency>
+		<groupId>cglib</groupId>
+		<artifactId>cglib</artifactId>
+		<version>2.1_3</version>
+		<scope>compile</scope>
+	</dependency>
+
+	<dependency>
+		<groupId>javax.transaction</groupId>
+		<artifactId>jta</artifactId>
+		<version>1.1</version>
+		<scope>compile</scope>
+	</dependency>
+	
+	<dependency>
+		<groupId>opensymphony</groupId>
+		<artifactId>oscache</artifactId>
+		<version>2.4</version>
+		<scope>compile</scope>
+	</dependency>
+	
+	<dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+      <version>3.0.3.RELEASE</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+  
+  <build>
+  	<plugins>
+	    <plugin>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-compiler-plugin</artifactId>
+		    <version>2.0.2</version>
+		    <configuration>
+		      <source>1.5</source>
+		      <target>1.5</target>
+		      <encoding>${project.build.sourceEncoding}</encoding>
+		    </configuration>
+		  </plugin>
+		  
+		  <plugin> 
+        	<groupId>org.apache.maven.plugins</groupId> 
+             <artifactId>maven-jar-plugin</artifactId> 
+             <configuration> 
+                 <excludes> 
+                     <exclude>**/.svn/</exclude> 
+                 </excludes> 
+             </configuration> 
+          </plugin> 
+		  
+		  <!-- sql插件 -->
+		<plugin>
+			<groupId>org.codehaus.mojo</groupId>
+			<artifactId>sql-maven-plugin</artifactId>
+			<version>1.3</version>
+			<configuration>
+				<driver>${jdbc.test.driver}</driver>
+				<url>${jdbc.test.url}</url>
+				<username>${jdbc.test.user}</username>
+				<password>${jdbc.test.password}</password>
+				<onError>continue</onError>
+				<encoding>${project.build.sourceEncoding}</encoding>
+			</configuration>
+			<dependencies>
+				<dependency>
+					<groupId>${jdbc.test.driver.groupid}</groupId>
+					<artifactId>${jdbc.test.driver.artifactId}</artifactId>
+					<version>${jdbc.test.driver.version}</version>
+				</dependency>
+			</dependencies>
+		</plugin>
+  	</plugins>
+  </build>
+  <profiles>
+  	<!--初始化数据库Schema及测试数据的profile, 以-Pinitdb激活 command:mvn initialize -Pinitdb-->
+		<profile>
+			<id>initdb</id>
+			<build>
+				<plugins>
+					<!-- sql 插件创建Schema -->
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>sql-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>init database</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<srcFiles>
+										<srcFile>${db.schema.file}</srcFile>
+									</srcFiles>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</build>
+	</profile>
+  </profiles>
+</project>
