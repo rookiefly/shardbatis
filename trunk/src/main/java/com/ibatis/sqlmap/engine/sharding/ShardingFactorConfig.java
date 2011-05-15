@@ -14,6 +14,7 @@ import com.ibatis.sqlmap.engine.config.ShardingConfig;
  * 
  */
 public class ShardingFactorConfig extends ShardingFactorGroup {
+	public static final String TAG_PARAM_OBJ="#parameter#";
 	private String paramExpr;
 	private String strategyClass;
 
@@ -38,41 +39,45 @@ public class ShardingFactorConfig extends ShardingFactorGroup {
 	 * @param parameterObject
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public ShardingFactorGroup transform(ShardingConfig sc,
 			Object parameterObject) {
-		if (paramExpr == null) {
-			return null;
-		}
-		String[] keys = paramExpr.split("\\.");
-		Object input = parameterObject;
-		for (String key : keys) {
-			if (input instanceof Map) {
-				input = ((Map) input).get(key);
-			} else {
-				String first = key.substring(0, 1);
-				StringBuilder sb = new StringBuilder("get");
-				sb.append(first.toUpperCase());
-				sb.append(key.substring(1));
-				String methodName = sb.toString();
-				Method method;
-				try {
-					method = input.getClass().getMethod(methodName);
-					input = method.invoke(input);
-				} catch (SecurityException e) {
-					throw new ShardingConfigException(e);
-				} catch (NoSuchMethodException e) {
-					throw new ShardingConfigException(e);
-				} catch (IllegalArgumentException e) {
-					throw new ShardingConfigException(e);
-				} catch (IllegalAccessException e) {
-					throw new ShardingConfigException(e);
-				} catch (InvocationTargetException e) {
-					throw new ShardingConfigException(e);
+		if (paramExpr == null || paramExpr.trim().length()==0) {
+			setParam(null);
+		}else if(TAG_PARAM_OBJ.equalsIgnoreCase(paramExpr)){
+			setParam(parameterObject);
+		}else{
+			String[] keys = paramExpr.split("\\.");
+			Object input = parameterObject;
+			for (String key : keys) {
+				if (input instanceof Map) {
+					input = ((Map) input).get(key);
+				} else {
+					String first = key.substring(0, 1);
+					StringBuilder sb = new StringBuilder("get");
+					sb.append(first.toUpperCase());
+					sb.append(key.substring(1));
+					String methodName = sb.toString();
+					Method method;
+					try {
+						method = input.getClass().getMethod(methodName);
+						input = method.invoke(input);
+					} catch (SecurityException e) {
+						throw new ShardingConfigException(e);
+					} catch (NoSuchMethodException e) {
+						throw new ShardingConfigException(e);
+					} catch (IllegalArgumentException e) {
+						throw new ShardingConfigException(e);
+					} catch (IllegalAccessException e) {
+						throw new ShardingConfigException(e);
+					} catch (InvocationTargetException e) {
+						throw new ShardingConfigException(e);
+					}
+	
 				}
-
 			}
+			setParam(input);
 		}
-		setParam(input);
 		if (this.strategyClass == null
 				|| this.strategyClass.trim().length() == 0) {
 			if (sc != null) {
