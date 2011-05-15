@@ -1,10 +1,15 @@
 package org.shardbatis.test.ibatis;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
 
 import junit.framework.Assert;
 
+import com.ibatis.sqlmap.engine.config.ShardingConfig;
 import com.ibatis.sqlmap.engine.sharding.ShardingException;
+import com.ibatis.sqlmap.engine.sharding.ShardingFactorConfig;
 import com.ibatis.sqlmap.engine.sharding.ShardingFactorGroup;
 import com.ibatis.sqlmap.engine.sharding.ShardingStrategy;
 import com.ibatis.sqlmap.engine.sharding.converter.ConverterFactory;
@@ -37,6 +42,40 @@ public class ConverterTest {
 		System.out.println(ret);
 		expect="DELETE FROM ANTIQUES_0 WHERE ITEM IN (SELECT ID FROM ANTIQUEOWNERS)";
 		Assert.assertEquals(ret, expect);
+		
+		//test config
+		ShardingConfig shardingConfig=new ShardingConfig();
+		shardingConfig.setStrategy(strategy);
+		shardingConfig.setTableName("ANTIQUES");
+		
+		ShardingFactorConfig config=new ShardingFactorConfig();
+		config.setParamExpr("");
+		config.setTableName("ANTIQUES");
+//		config.setStrategyClass("com.ibatis.sqlmap.engine.sharding.impl.DefaultShardingStrategy");
+		Object param=new Object();
+		ShardingFactorGroup group=config.transform(shardingConfig, param);
+		
+		sql="DELETE FROM ANTIQUES WHERE ITEM = ? AND BUYERID = ? AND SELLERID = ?";
+		expect="DELETE FROM ANTIQUES WHERE ITEM = ? AND BUYERID = ? AND SELLERID = ?";
+		ret=factory.convert(sql, group);
+		Assert.assertEquals(ret, expect);
+		
+		config.setParamExpr("#parameter#");
+		config.setTableName("ANTIQUES");
+		group=config.transform(shardingConfig, new Integer(2));
+		
+		expect="DELETE FROM ANTIQUES_0 WHERE ITEM = ? AND BUYERID = ? AND SELLERID = ?";
+		ret=factory.convert(sql, group);
+		Assert.assertEquals(ret, expect);
+		
+		config.setParamExpr(null);
+		config.setTableName("ANTIQUES");
+		group=config.transform(shardingConfig, new Integer(2));
+		
+		expect="DELETE FROM ANTIQUES WHERE ITEM = ? AND BUYERID = ? AND SELLERID = ?";
+		ret=factory.convert(sql, group);
+		Assert.assertEquals(ret, expect);
+		
 	}
 	@Test
 	public void testUpdate() throws ShardingException{
@@ -80,6 +119,93 @@ public class ConverterTest {
 		expect="INSERT INTO ANTIQUES_0 VALUES (?, ?, ?, ?)";
 		ret=factory.convert(sql, group1,group2);
 		Assert.assertEquals(ret, expect);
+	}
+	
+	@Test
+	public void testSelectWithConfig() throws ShardingException{
+		ShardingStrategy strategy=new DefaultShardingStrategy();
+		ConverterFactory factory=ConverterFactory.getInstance();
+		//test config
+		ShardingConfig shardingConfig=new ShardingConfig();
+		shardingConfig.setStrategy(strategy);
+		shardingConfig.setTableName("ANTIQUES");
+		
+		ShardingFactorConfig config=new ShardingFactorConfig();
+		config.setParamExpr("");
+		config.setTableName("ANTIQUES");
+		
+		String sql="SELECT a.OWNERLASTNAME, a.OWNERFIRSTNAME "
+			+"FROM ANTIQUEOWNERS as a, ANTIQUES as b "
+			+"WHERE b.BUYERID = a.OWNERID AND b.ITEM = 'Chair'";
+		String expect="SELECT a.OWNERLASTNAME, a.OWNERFIRSTNAME "
+			+"FROM ANTIQUEOWNERS AS a, ANTIQUES AS b "
+			+"WHERE b.BUYERID = a.OWNERID AND b.ITEM = 'Chair'";
+		
+		ShardingFactorGroup group=config.transform(shardingConfig, new Integer(2));
+		String ret=factory.convert(sql, group);
+		Assert.assertEquals(expect, ret);
+		
+		config=new ShardingFactorConfig();
+		config.setParamExpr(null);
+		config.setTableName("ANTIQUES");
+		group=config.transform(shardingConfig, new Integer(2));
+		ret=factory.convert(sql, group);
+		Assert.assertEquals(expect, ret);
+		
+		config=new ShardingFactorConfig();
+		config.setParamExpr("#parameter#");
+		config.setTableName("ANTIQUES");
+		group=config.transform(shardingConfig, new Integer(2));
+		ret=factory.convert(sql, group);
+		
+		expect="SELECT a.OWNERLASTNAME, a.OWNERFIRSTNAME "
+			+"FROM ANTIQUEOWNERS AS a, ANTIQUES_0 AS b "
+			+"WHERE b.BUYERID = a.OWNERID AND b.ITEM = 'Chair'";
+		Assert.assertEquals(expect, ret);
+		
+		Map<String,Object> param=new HashMap<String,Object>();
+		param.put("key", new Integer(123456));
+		
+		config=new ShardingFactorConfig();
+		config.setParamExpr("key");
+		config.setTableName("ANTIQUES");
+		group=config.transform(shardingConfig, param);
+		ret=factory.convert(sql, group);
+		expect="SELECT a.OWNERLASTNAME, a.OWNERFIRSTNAME "
+			+"FROM ANTIQUEOWNERS AS a, ANTIQUES_0 AS b "
+			+"WHERE b.BUYERID = a.OWNERID AND b.ITEM = 'Chair'";
+		Assert.assertEquals(expect, ret);
+		
+		config=new ShardingFactorConfig();
+		config.setParamExpr("key");
+		config.setTableName("ANTIQUES");
+		group=config.transform(shardingConfig, param);
+		
+		config=new ShardingFactorConfig();
+		config.setParamExpr(null);
+		config.setTableName("ANTIQUEOWNERS");
+		ShardingFactorGroup group1=config.transform(shardingConfig, param);
+
+		ret=factory.convert(sql, group,group1);
+		
+		expect="SELECT a.OWNERLASTNAME, a.OWNERFIRSTNAME "
+			+"FROM ANTIQUEOWNERS AS a, ANTIQUES_0 AS b "
+			+"WHERE b.BUYERID = a.OWNERID AND b.ITEM = 'Chair'";
+		Assert.assertEquals(expect, ret);
+		
+		param.put("key1", new Integer(7));
+		config=new ShardingFactorConfig();
+		config.setParamExpr("key1");
+		config.setTableName("ANTIQUEOWNERS");
+		group1=config.transform(shardingConfig, param);
+
+		ret=factory.convert(sql, group,group1);
+		
+		expect="SELECT a.OWNERLASTNAME, a.OWNERFIRSTNAME "
+			+"FROM ANTIQUEOWNERS_1 AS a, ANTIQUES_0 AS b "
+			+"WHERE b.BUYERID = a.OWNERID AND b.ITEM = 'Chair'";
+		Assert.assertEquals(expect, ret);
+		
 	}
 	
 	@Test
@@ -228,6 +354,7 @@ public class ConverterTest {
 		ret=factory.convert(sql, group,group1,group2);
 		//System.out.println(ret);
 		Assert.assertEquals(expect, ret);
+		
 		
 	}
 	
