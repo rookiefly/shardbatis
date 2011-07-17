@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>net.sourceforge</groupId>
+  <artifactId>jsqlparser</artifactId>
+  <version>0.7.0</version>
+  <versioning>
+    <versions>
+      <version>0.7.0</version>
+    </versions>
+    <lastUpdated>20110717112240</lastUpdated>
+  </versioning>
+</metadata>
