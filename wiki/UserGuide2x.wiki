@@ -105,3 +105,26 @@ INSERT INTO test_table1 VALUES (21, 01, 'Ottoman', ?,?)
 INSERT INTO test_table1 (BUYERID, SELLERID, ITEM) VALUES (01, 21, ?)
 }}}
  可能有些sql语句没有出现在测试用例里，但是相信基本上常用的查询sql shardbatis解析都没有问题，因为shardbatis对sql的解析是基于<a target="_blank" href="http://jsqlparser.sourceforge.net/">jsqlparser</a>
+
+===下载、安装===
+ * 在maven中使用（推荐）
+{{{
+<!-- 新增远程仓库设置 -->
+<repository>
+	<id>shardbaits</id>
+	<name>shardbaits repository</name>
+	<url>http://shardbatis.googlecode.com/svn/trunk/repository</url>
+	<snapshots>
+		<enabled>false</enabled>
+	</snapshots>
+</repository>
+
+<!-- 声明依赖 -->
+<dependency>
+	<groupId>org.shardbatis</groupId>
+	<artifactId>shardbatis</artifactId>
+	<version>2.0.0B</version>
+</dependency>
+}}}
+ * 手工添加到项目classpath中
+请到download页面下载
