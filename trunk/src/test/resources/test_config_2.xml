@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE shardingConfig PUBLIC "-//shardbatis.googlecode.com//DTD Shardbatis 2.0//EN"
+  "http://shardbatis.googlecode.com/dtd/shardbatis-config.dtd">
+<shardingConfig>
+		<ignoreList>
+			<value>ignoreId1</value>
+			<value>ignoreId2</value>
+			<value> <![CDATA[ <testid ]]></value>
+		</ignoreList>
+		
+		<parseList>
+			<value>parseId</value>
+			<value> <![CDATA[ parseid>2]]></value>
+		</parseList>
+		
+        <strategy tableName="test_table1" strategyClass="com.google.code.shardbatis.strategy.impl.TestShardStrategyImpl"/>
+        <strategy tableName="test_table2" strategyClass="com.google.code.shardbatis.strategy.impl.TestShardStrategyImpl"/>
+</shardingConfig>

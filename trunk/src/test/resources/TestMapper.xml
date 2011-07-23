@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.google.code.shardbatis.test.mapper.AppTestMapper">
+
+   <insert id="insert" parameterType="AppTestDO" >
+       <selectKey resultType="int" keyProperty="id" order="BEFORE">
+            select seq_app_test_id.nextval from dual
+        </selectKey>
+    	insert into app_test (ID
+        <if test="cnt!=null">
+        	,CNT
+        </if>
+         )values (#{id}
+        <if test="cnt!=null">
+             ,#{cnt}
+        </if>
+        )
+        <!-- 
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            SELECT @@IDENTITY AS id
+        </selectKey> -->
+   </insert>
+   
+   <select id="getList" parameterType="AppTestDO" resultType="AppTestDO">
+   	SELECT * FROM APP_TEST where id in (select id from  APP_TEST_TABLE_1 )
+   </select>
+
+</mapper>

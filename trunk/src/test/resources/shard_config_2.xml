@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE shardingConfig PUBLIC "-//shardbatis.googlecode.com//DTD Shardbatis 2.0//EN"
+  "http://shardbatis.googlecode.com/dtd/shardbatis-config.dtd">
+<shardingConfig>
+	<!--
+		ignoreList可选配置
+		ignoreList配置的mapperId会被分表参加忽略解析,不会对sql进行修改
+	-->
+	<ignoreList>
+		<value>com.google.code.shardbatis.test.mapper.AppTestMapper.insertNoShard</value>
+	</ignoreList>
+	<!-- 
+		parseList可选配置
+		如果配置了parseList,只有在parseList范围内并且不再ignoreList内的sql才会被解析和修改
+	-->
+	<parseList>
+		<value>com.google.code.shardbatis.test.mapper.AppTestMapper.insert</value>
+	</parseList>
+	<!-- 
+		配置分表策略
+	-->
+	<strategy tableName="APP_TEST" strategyClass="com.google.code.shardbatis.strategy.impl.AppTestShardStrategyImpl"/>      
+</shardingConfig>
