@@ -1,0 +1,28 @@
+select * from test_table1
+select * from test_table1 where col_1='123'
+select * from test_table1 where col_1='123' and col_2=8
+select * from test_table1 where col_1=?
+select col_1,max(col_2) from test_table1 where col_4='t1' group by col_1
+select col_1,col_2,col_3 from test_table1 where col_4='t1' order by col_1
+select col_1,col_2,col_3 from test_table1 where id in (?,?,?,?,?,?,?,?,?) limit ?,?
+select a.*  from test_table1 a,test_table2 b where a.id=b.id and a.type='xxxx'
+select a.col_1,a.col_2,a.col_3 from test_table1 a where a.id in (select aid from test_table2 where col_1=1 and col_2=?) order by id desc
+select col_1,col_2 from test_table1 where type is not null and col_3 is null order by id
+select count(*),col_1 from test_table2 group by col_1 having count(*)>1
+select a.col_1,a.col_2,b.col_1 from test_table1 a,t_table b where a.id=b.id
+insert into test_table1 (col_1,col_2,col_3,col_4) values (?,?,?,?)
+SELECT EMPLOYEEIDNO FROM test_table1 WHERE POSITION = 'Manager' AND SALARY > 60000 OR BENEFITS > 12000
+SELECT EMPLOYEEIDNO FROM test_table1 WHERE POSITION = 'Manager' AND (SALARY > 50000 OR BENEFIT > 10000)
+SELECT EMPLOYEEIDNO FROM test_table1 WHERE LASTNAME LIKE 'L%'
+SELECT DISTINCT SELLERID, OWNERLASTNAME, OWNERFIRSTNAME FROM test_table1, test_table2 WHERE SELLERID = OWNERID ORDER BY OWNERLASTNAME, OWNERFIRSTNAME, OWNERID
+SELECT OWNERFIRSTNAME, OWNERLASTNAME FROM test_table1 WHERE EXISTS (SELECT * FROM test_table2 WHERE ITEM = ?)
+SELECT BUYERID, ITEM FROM test_table1 WHERE PRICE >= ALL (SELECT PRICE FROM test_table2)
+SELECT BUYERID FROM test_table1 UNION SELECT BUYERID FROM test_table2
+SELECT OWNERID, 'is in both Orders & Antiques' FROM test_table1 a, test_table2 b WHERE a.OWNERID = b.BUYERID and a.type in (?,?,?)
+SELECT DISTINCT SELLERID, OWNERLASTNAME, OWNERFIRSTNAME FROM test_table1, noconvert_table WHERE SELLERID = OWNERID ORDER BY OWNERLASTNAME, OWNERFIRSTNAME, OWNERID
+SELECT a.* FROM test_table1 a, noconvert_table b WHERE a.SELLERID = b.OWNERID 
+update test_table1 set col_1=123 ,col_2=?,col_3=? where col_4=?
+update test_table1 set col_1=?,col_2=col_2+1 where id in (?,?,?,?)
+delete from test_table2 where id in (?,?,?,?,?,?) and col_1 is not null
+INSERT INTO test_table1 VALUES (21, 01, 'Ottoman', ?,?)
+INSERT INTO test_table1 (BUYERID, SELLERID, ITEM) VALUES (01, 21, ?)

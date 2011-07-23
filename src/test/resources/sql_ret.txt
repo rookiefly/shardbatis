@@ -1,0 +1,28 @@
+SELECT * FROM test_table1_xx
+SELECT * FROM test_table1_xx WHERE col_1 = '123'
+SELECT * FROM test_table1_xx WHERE col_1 = '123' AND col_2 = 8
+SELECT * FROM test_table1_xx WHERE col_1 = ?
+SELECT col_1, max(col_2) FROM test_table1_xx WHERE col_4 = 't1' GROUP BY col_1
+SELECT col_1, col_2, col_3 FROM test_table1_xx WHERE col_4 = 't1' ORDER BY col_1 ASC
+SELECT col_1, col_2, col_3 FROM test_table1_xx WHERE id IN (?, ?, ?, ?, ?, ?, ?, ?, ?) LIMIT ? OFFSET ?
+SELECT a.* FROM test_table1_xx AS a, test_table2_xx AS b WHERE a.id = b.id AND a.type = 'xxxx'
+SELECT a.col_1, a.col_2, a.col_3 FROM test_table1_xx AS a WHERE a.id IN (SELECT aid FROM test_table2_xx WHERE col_1 = 1 AND col_2 = ?) ORDER BY id DESC
+SELECT col_1, col_2 FROM test_table1_xx WHERE type IS NOT NULL AND col_3 IS NULL ORDER BY id ASC
+SELECT count(*), col_1 FROM test_table2_xx GROUP BY col_1 HAVING count(*) > 1
+SELECT a.col_1, a.col_2, b.col_1 FROM test_table1_xx AS a, t_table AS b WHERE a.id = b.id
+INSERT INTO test_table1_xx(col_1, col_2, col_3, col_4) VALUES (?, ?, ?, ?)
+SELECT EMPLOYEEIDNO FROM test_table1_xx WHERE POSITION = 'Manager' AND SALARY > 60000 OR BENEFITS > 12000
+SELECT EMPLOYEEIDNO FROM test_table1_xx WHERE POSITION = 'Manager' AND (SALARY > 50000 OR BENEFIT > 10000)
+SELECT EMPLOYEEIDNO FROM test_table1_xx WHERE LASTNAME LIKE 'L%'
+SELECT DISTINCT SELLERID, OWNERLASTNAME, OWNERFIRSTNAME FROM test_table1_xx, test_table2_xx WHERE SELLERID = OWNERID ORDER BY OWNERLASTNAME ASC, OWNERFIRSTNAME ASC, OWNERID ASC
+SELECT OWNERFIRSTNAME, OWNERLASTNAME FROM test_table1_xx WHERE  EXISTS (SELECT * FROM test_table2_xx WHERE ITEM = ?)
+SELECT BUYERID, ITEM FROM test_table1_xx WHERE PRICE >=  ALL (SELECT PRICE FROM test_table2_xx)
+(SELECT BUYERID FROM test_table1_xx) UNION (SELECT BUYERID FROM test_table2_xx)
+SELECT OWNERID, 'is in both Orders & Antiques' FROM test_table1_xx AS a, test_table2_xx AS b WHERE a.OWNERID = b.BUYERID AND a.type IN (?, ?, ?)
+SELECT DISTINCT SELLERID, OWNERLASTNAME, OWNERFIRSTNAME FROM test_table1_xx, noconvert_table WHERE SELLERID = OWNERID ORDER BY OWNERLASTNAME ASC, OWNERFIRSTNAME ASC, OWNERID ASC
+SELECT a.* FROM test_table1_xx AS a, noconvert_table AS b WHERE a.SELLERID = b.OWNERID
+UPDATE test_table1_xx SET col_1=123, col_2=?, col_3=? WHERE col_4 = ?
+UPDATE test_table1_xx SET col_1=?, col_2=col_2 + 1 WHERE id IN (?, ?, ?, ?)
+DELETE FROM test_table2_xx WHERE id IN (?, ?, ?, ?, ?, ?) AND col_1 IS NOT NULL
+INSERT INTO test_table1_xx VALUES (21, 01, 'Ottoman', ?, ?)
+INSERT INTO test_table1_xx(BUYERID, SELLERID, ITEM) VALUES (01, 21, ?)
