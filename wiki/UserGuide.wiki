@@ -1,11 +1,10 @@
-#labels Phase-Deploy
 #sidebar UserGuideIndex
 
 = Introduction =
 
-MyBatis2和MyBatis3两个版本实现和使用方式完全不同。与之配合的shardbatis也有两个版本，实现方式也有所不同。
-如果要在MyBatis2中使用shardbatis请使用0.9.3 beta
-如果要在MyBatis3中使用shardbatis请使用2.x.x
+MyBatis2和MyBatis3两个版本实现和使用方式完全不同。与之配合的shardbatis也有两个版本，实现方式也有所不同。<br/>
+如果要在MyBatis2中使用shardbatis请使用0.9.3 beta<br/>
+如果要在MyBatis3中使用shardbatis请使用2.x.x<br/>
 
 = User Guide =
   * [UserGuide2x shardbatis2.0使用指南]
