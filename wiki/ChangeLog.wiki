@@ -1,3 +1,5 @@
+#sidebar UserGuideIndex
+
 ==Change Log==
 
 0.9.3 beta:
