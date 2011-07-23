@@ -66,6 +66,19 @@ public interface ShardStrategy {
 com.google.code.shardbatis.strategy.impl.AppTestShardStrategyImpl
 }}}
 
+===3.代码中使用shardbatis===
+因为shardbatis2.0使用插件方式对mybatis功能进行增强，因此使用配置了shardbatis的mybatis3和使用原生的mybatis3没有区别
+{{{
+SqlSession session = sqlSessionFactory.openSession();
+try {
+	AppTestMapper mapper = session.getMapper(AppTestMapper.class);
+  mapper.insert(testDO);
+	session.commit();
+} finally {
+	session.close();
+}
+}}}
+
 ===<font color="red">使用注意事项</font>===
  * 2.0版本中insert update delete 语句中的*子查询语句中的表*不支持sharding(不好意思太拗口了-`_`-!)
  * select语句中如果进行多表关联，请务必为每个表名加上别名
