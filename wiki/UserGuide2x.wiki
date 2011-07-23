@@ -1,0 +1,78 @@
+#sidebar UserGuideIndex
+
+==shardbatis2.x使用指南==
+===运行环境===
+ * jdk6.0+:shardbatis使用JDK6.0编译。也可以使用JDK5.0编译
+ * mybatis3.0+
+===1.配置===
+ * 添加sharding配置
+新建一个xml文件,例如：shard_config.xml
+{{{
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE shardingConfig PUBLIC "-//shardbatis.googlecode.com//DTD Shardbatis 2.0//EN"
+  "http://shardbatis.googlecode.com/dtd/shardbatis-config.dtd">
+<shardingConfig>
+	<!--
+		ignoreList可选配置
+		ignoreList配置的mapperId会被分表参加忽略解析,不会对sql进行修改
+	-->
+	<ignoreList>
+		<value>com.google.code.shardbatis.test.mapper.AppTestMapper.insertNoShard</value>
+	</ignoreList>
+	<!-- 
+		parseList可选配置
+		如果配置了parseList,只有在parseList范围内并且不再ignoreList内的sql才会被解析和修改
+	-->
+	<parseList>
+		<value>com.google.code.shardbatis.test.mapper.AppTestMapper.insert</value>
+	</parseList>
+	<!-- 
+		配置分表策略
+	-->
+	<strategy tableName="APP_TEST" strategyClass="com.google.code.shardbatis.strategy.impl.AppTestShardStrategyImpl"/>      
+</shardingConfig>
+}}}
+shard_config.xml必须保存在应用的classpath中
+ * 在mybatis配置文件中添加插件配置
+{{{
+<plugins>
+	<plugin interceptor="com.google.code.shardbatis.plugin.ShardPlugin">
+		<property name="shardingConfig" value="shard_config.xml"/>
+	</plugin>
+</plugins> 
+}}}
+
+===2.实现自己的sharding策略===
+ * 实现一个简单的接口即可
+{{{
+/**
+ * 分表策略接口
+ * @author sean.he
+ *
+ */
+public interface ShardStrategy {
+	/**
+	 * 得到实际表名
+	 * @param baseTableName 逻辑表名,一般是没有前缀或者是后缀的表名
+	 * @param params mybatis执行某个statement时使用的参数
+	 * @param mapperId mybatis配置的statement id
+	 * @return
+	 */
+	String getTargetTableName(String baseTableName,Object params,String mapperId);
+}
+}}}
+ 可以参考
+{{{
+com.google.code.shardbatis.strategy.impl.AppTestShardStrategyImpl
+}}}
+
+===<font color="red">使用注意事项</font>===
+ * 2.0版本中insert update delete 语句中的*子查询语句中的表*不支持sharding(不好意思太拗口了-`_`-!)
+ * select语句中如果进行多表关联，请务必为每个表名加上别名
+{{{
+例如原始sql语句：SELECT a.* FROM ANTIQUES a,ANTIQUEOWNERS b, mytable c where a.id=b.id and b.id=c.id
+经过转换后的结果可能为：SELECT a.* FROM ANTIQUES_0 AS a, ANTIQUEOWNERS_1 AS b, mytable_1 AS c WHERE a.id = b.id AND b.id = c.id
+}}}
+ * 目前已经支持了大部分的sql语句的解析，已经测试通过的语句可以查看测试用例：
+
+ 可能有些sql语句没有出现在测试用例里，但是相信基本上常用的查询sql shardbatis解析都没有问题，因为shardbatis对sql的解析是基于<a target="_blank" href="http://jsqlparser.sourceforge.net/">jsqlparser</a>
