@@ -1,4 +1,4 @@
-#sidebar TableOfContents
+#sidebar UserGuideIndex
 ==shardbatis0.9使用指南==
 ===运行环境===
  * jdk5.0+:对于ibatis的扩展基于jdk5.0的api，并且使用jdk5.0进行编译
