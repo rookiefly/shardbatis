@@ -1,4 +1,4 @@
   * [UserGuide Introduction]
   * [UserGuide User Guide]
-    * [UserGuide2.x shardbatis2.0使用指南]
+    * [UserGuide2x shardbatis2.0使用指南]
     * [UserGuide09 shardbatis0.9使用指南]
