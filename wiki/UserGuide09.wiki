@@ -217,7 +217,7 @@ jdk:1.5.0_22 无jvm参数<br/>
 [http://shardbatis.googlecode.com/svn/tags/0.9.3beta/src/test/resources/perf.jpg]
 
 ===下载、安装===
-* 在maven中使用（推荐）
+ * 在maven中使用（推荐）
 {{{
 <!-- 新增远程仓库设置 -->
 <repository>
@@ -236,5 +236,5 @@ jdk:1.5.0_22 无jvm参数<br/>
 	<version>0.9.2B</version>
 </dependency>
 }}}
-* 手工添加到项目classpath中
+ * 手工添加到项目classpath中
 请到download页面下载
