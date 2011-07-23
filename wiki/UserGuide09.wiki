@@ -214,7 +214,7 @@ jdk:1.5.0_22 无jvm参数<br/>
 || sharding || 690.721 || 1051.983778 || 1708.146467 || 1584.499067 ||
 || no sharding || 683.7596667 || 1024.096444 ||	1704.1314 || 1601.5926 ||
 
-[http://shardbatis.googlecode.com/svn/trunk/src/test/resources/perf.jpg]
+[http://shardbatis.googlecode.com/svn/tags/0.9.3beta/src/test/resources/perf.jpg]
 
 ===Roadmap===
 *下版本发布计划:*<br/>
