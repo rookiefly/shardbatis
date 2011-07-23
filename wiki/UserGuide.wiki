@@ -1,5 +1,5 @@
 #labels Phase-Deploy
-#sidebar TableOfContents
+#sidebar UserGuideIndex
 
 = Introduction =
 
