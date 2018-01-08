@@ -30,7 +30,9 @@ import com.google.code.shardbatis.util.ReflectionUtils;
  * @author sean.he
  * 
  */
-@Intercepts( { @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class })})
+@Intercepts( {
+		@Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class, Integer.class })
+})
 public class ShardPlugin implements Interceptor {
 	private static final Log log = LogFactory.getLog(ShardPlugin.class);
 
