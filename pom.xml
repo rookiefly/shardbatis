@@ -147,12 +147,12 @@
             <version>3.4.6</version>
         </dependency>
         <dependency>
-            <groupId>net.sourceforge</groupId>
+            <groupId>net.sf.jsqlparser</groupId>
             <artifactId>jsqlparser</artifactId>
             <version>0.7.0</version>
         </dependency>
     </dependencies>
-
+x
     <build>
         <plugins>
             <plugin>
