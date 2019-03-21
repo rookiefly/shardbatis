@@ -14,5 +14,5 @@
 [ProjectHome](https://github.com/rookiefly/shardbatis/wiki/ProjectHome)
 
 ### 其他分库分表中间件推荐列表
-- [sharding-jdbc](https://github.com/apache/incubator-shardingsphere) JDBC extension
+- [Sharding-JDBC](https://github.com/apache/incubator-shardingsphere) JDBC extension
 - [Mycat-Server](https://github.com/MyCATApache/Mycat-Server) Mysql proxy
