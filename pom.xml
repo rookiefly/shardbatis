@@ -45,16 +45,6 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-        <!--
-            for sun jars (eg.javax.transaction)
-            ses http://maven.apache.org/guides/mini/guide-coping-with-sun-jars.html
-
-        <repository>
-          <id>maven2-repository.dev.java.net</id>
-          <name>Java.net Repository for Maven</name>
-          <url>http://download.java.net/maven/2/</url>
-          <layout>default</layout>
-        </repository>-->
     </repositories>
 
     <dependencies>
@@ -152,7 +142,6 @@
             <version>0.7.0</version>
         </dependency>
     </dependencies>
-x
     <build>
         <plugins>
             <plugin>
