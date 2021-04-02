@@ -15,8 +15,9 @@
 
         <jdbc.test.driver>org.h2.Driver</jdbc.test.driver>
 
-        <jdbc.test.url>jdbc:h2:tcp://localhost/~/sharebatis</jdbc.test.url>
-        <!-- <jdbc.test.url>jdbc:h2:mem:sharebatis;DB_CLOSE_DELAY=-1</jdbc.test.url>-->
+        <!--        <jdbc.test.url>jdbc:h2:tcp://localhost/~/sharebatis</jdbc.test.url>-->
+        <!--        <jdbc.test.url>jdbc:h2:mem:sharebatis;DB_CLOSE_DELAY=-1</jdbc.test.url>-->
+        <jdbc.test.url>jdbc:h2:file:~/h2/sharebatis</jdbc.test.url>
         <jdbc.test.user>sa</jdbc.test.user>
         <jdbc.test.password></jdbc.test.password>
 
@@ -32,15 +33,6 @@
             <id>offical</id>
             <name>Maven Offical Repository</name>
             <url>http://repo1.maven.org/maven2</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-
-        <repository>
-            <id>jboss</id>
-            <name>jboss repository</name>
-            <url>http://repository.jboss.com/maven2</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
@@ -68,69 +60,6 @@
             <version>1.2.16</version>
             <scope>test</scope>
         </dependency>
-        <!--
-        <dependency>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-test</artifactId>
-          <version>3.0.3.RELEASE</version>
-          <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.5.6</version>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-dbcp</groupId>
-            <artifactId>commons-dbcp</artifactId>
-            <version>1.2.2</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.1.1</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.16</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib</artifactId>
-            <version>2.1_3</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.transaction</groupId>
-            <artifactId>jta</artifactId>
-            <version>1.1</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>opensymphony</groupId>
-            <artifactId>oscache</artifactId>
-            <version>2.4</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-orm</artifactId>
-          <version>3.0.3.RELEASE</version>
-          <scope>compile</scope>
-        </dependency>
-        -->
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
@@ -158,11 +87,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>**/.svn/</exclude>
-                    </excludes>
-                </configuration>
+                <version>3.2.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -205,6 +130,7 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>sql-maven-plugin</artifactId>
+                        <version>1.3</version>
                         <executions>
                             <execution>
                                 <id>init database</id>
