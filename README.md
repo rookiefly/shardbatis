@@ -1,3 +1,9 @@
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/rookiefly/shardbatis)
+[![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
+[![Stars](https://img.shields.io/github/stars/rookiefly/shardbatis)](https://img.shields.io/github/stars/rookiefly/shardbatis)
+[![Forks](https://img.shields.io/github/forks/rookiefly/shardbatis)](https://img.shields.io/github/forks/rookiefly/shardbatis)
+![](https://img.shields.io/badge/build-release-brightgreen.svg)
+
 # shardbatis
 基于mybatis分表插件，优势：轻量、简单，插拔方便、兼容性比较好；可支持分库的二次开发。
 
