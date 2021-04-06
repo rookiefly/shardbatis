@@ -19,7 +19,7 @@ public abstract class AbstractSqlConverter implements SqlConverter {
      * 将Statement反解析为sql
      *
      * @param statement
-     * @return
+     * @return String
      */
     protected String doDeParse(Statement statement) {
         StatementDeParser deParser = new StatementDeParser(new StringBuffer());
@@ -34,7 +34,7 @@ public abstract class AbstractSqlConverter implements SqlConverter {
      * @param tableName
      * @param params
      * @param mapperId
-     * @return
+     * @return String
      */
     protected String convertTableName(String tableName, Object params,
                                       String mapperId) {
@@ -52,7 +52,7 @@ public abstract class AbstractSqlConverter implements SqlConverter {
      * @param statement
      * @param params
      * @param mapperId
-     * @return
+     * @return Statement
      */
     protected abstract Statement doConvert(Statement statement, Object params,
                                            String mapperId);
