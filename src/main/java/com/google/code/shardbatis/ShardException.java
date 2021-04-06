@@ -2,7 +2,6 @@ package com.google.code.shardbatis;
 
 /**
  * @author sean.he
- *
  */
 public class ShardException extends Exception {
 

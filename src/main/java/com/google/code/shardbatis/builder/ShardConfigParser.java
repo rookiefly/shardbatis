@@ -1,13 +1,6 @@
 package com.google.code.shardbatis.builder;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
+import com.google.code.shardbatis.strategy.ShardStrategy;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
@@ -18,11 +11,15 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.google.code.shardbatis.strategy.ShardStrategy;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author sean.he
- *
  */
 public class ShardConfigParser {
     private static final Log log = LogFactory.getLog(ShardConfigParser.class);
@@ -40,6 +37,7 @@ public class ShardConfigParser {
 
     /**
      * 解析xml配置文件并构建ShardConfigFactory
+     *
      * @param input
      * @return
      * @throws Exception
@@ -57,6 +55,7 @@ public class ShardConfigParser {
         DefaultHandler handler = new DefaultHandler() {
             private String parentElement;
 
+            @Override
             public void startElement(String uri, String localName,
                                      String qName, Attributes attributes) throws SAXException {
 
@@ -87,6 +86,7 @@ public class ShardConfigParser {
 
             }
 
+            @Override
             public void characters(char ch[], int start, int length) throws SAXException {
                 if ("ignoreList".equals(parentElement)) {
                     configHolder.addIgnoreId(new String(ch, start, length).trim());
@@ -96,16 +96,20 @@ public class ShardConfigParser {
 
             }
 
+            @Override
             public void error(SAXParseException e) throws SAXException {
                 throw e;
             }
 
+            @Override
             public InputSource resolveEntity(String publicId, String systemId)
                     throws IOException, SAXException {
-                if (publicId != null)
+                if (publicId != null) {
                     publicId = publicId.toLowerCase();
-                if (systemId != null)
+                }
+                if (systemId != null) {
                     systemId = systemId.toLowerCase();
+                }
 
                 InputSource source = null;
                 try {

@@ -35,6 +35,7 @@ public class ShardPlugin implements Interceptor {
     // ConcurrentHashMap<mapperId,needParse>
     private static final ConcurrentHashMap<String, Boolean> cache = new ConcurrentHashMap<String, Boolean>();
 
+    @Override
     public Object intercept(Invocation invocation) throws Throwable {
 
         StatementHandler statementHandler = (StatementHandler) invocation
@@ -71,10 +72,12 @@ public class ShardPlugin implements Interceptor {
         return invocation.proceed();
     }
 
+    @Override
     public Object plugin(Object target) {
         return Plugin.wrap(target, this);
     }
 
+    @Override
     public void setProperties(Properties properties) {
         // 解析配置文件
         String config = properties.getProperty(SHARDING_CONFIG, null);
