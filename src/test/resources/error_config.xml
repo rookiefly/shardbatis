@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE shardingConfig PUBLIC "-//shardbatis.googlecode.com//DTD Shardbatis 2.0//EN"
+<!DOCTYPE shardingConfig PUBLIC "-//open.rookiefly.com//DTD Shardbatis 2.0//EN"
         "http://open.rookiefly.com/dtd/shardbatis-config.dtd">
 <shardingConfig>
     <strategy tableName="test_table1" strategyClass="com.rookiefly.open.shardbatis.strategy.impl.NoShardStrategy"/>
