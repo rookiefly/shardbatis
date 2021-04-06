@@ -4,11 +4,11 @@
 
 <configuration>
     <typeAliases>
-        <typeAlias alias="AppTestDO" type="com.google.code.shardbatis.test.domain.AppTestDO"/>
+        <typeAlias alias="AppTestDO" type="com.rookiefly.open.shardbatis.test.domain.AppTestDO"/>
     </typeAliases>
     <!-- -->
     <plugins>
-        <plugin interceptor="com.google.code.shardbatis.plugin.ShardPlugin">
+        <plugin interceptor="com.rookiefly.open.shardbatis.plugin.ShardPlugin">
             <property name="shardingConfig" value="shard_config.xml"/>
         </plugin>
     </plugins>

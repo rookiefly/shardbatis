@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE shardingConfig PUBLIC "-//shardbatis.googlecode.com//DTD Shardbatis 2.0//EN"
-        "http://shardbatis.googlecode.com/dtd/shardbatis-config.dtd">
+<!DOCTYPE shardingConfig PUBLIC "-//open.rookiefly.com//DTD Shardbatis 2.0//EN"
+        "http://open.rookiefly.com/dtd/shardbatis-config.dtd">
 <shardingConfig>
     <ignoreList>
         <value>ignoreId1</value>
         <value>ignoreId2</value>
-        <value>com.google.code.shardbatis.test.mapper.AppTestMapper.insertNoShard</value>
+        <value>com.rookiefly.open.shardbatis.test.mapper.AppTestMapper.insertNoShard</value>
     </ignoreList>
     <!--
     <parseList>
@@ -14,6 +14,6 @@
     </parseList> -->
 
 
-    <strategy tableName="APP_TEST" strategyClass="com.google.code.shardbatis.strategy.impl.AppTestShardStrategyImpl"/>
+    <strategy tableName="APP_TEST" strategyClass="com.rookiefly.open.shardbatis.strategy.impl.AppTestShardStrategyImpl"/>
 
 </shardingConfig>
