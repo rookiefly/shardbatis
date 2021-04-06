@@ -38,8 +38,8 @@ public class ShardConfigParser {
     /**
      * 解析xml配置文件并构建ShardConfigFactory
      *
-     * @param input
-     * @return
+     * @param input 输入流
+     * @return ShardConfigHolder
      * @throws Exception
      */
     public ShardConfigHolder parse(InputStream input) throws Exception {
