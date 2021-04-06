@@ -4,7 +4,7 @@
 
 <configuration>
     <typeAliases>
-        <typeAlias alias="AppTestDO" type="com.google.code.shardbatis.test.domain.AppTestDO"/>
+        <typeAlias alias="AppTestDO" type="com.rookiefly.open.shardbatis.test.domain.AppTestDO"/>
     </typeAliases>
 
     <environments default="development">

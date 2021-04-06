@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.google.code.shardbatis.test.mapper.AppTestMapper">
+<mapper namespace="com.rookiefly.open.shardbatis.test.mapper.AppTestMapper">
 
     <insert id="insert" parameterType="AppTestDO">
         <selectKey resultType="int" keyProperty="id" order="BEFORE">
