@@ -72,7 +72,7 @@ public class PerformanceTest {
      * -server -XX:-PrintCompilation -Xmx512m -Xms512m -Xmn256m
      * @throws Exception
      */
-//	@Ignore
+    @Ignore
     @Test
     public void testNoPlugin() throws Exception {
         String resource = "MapperConfig_3.xml";

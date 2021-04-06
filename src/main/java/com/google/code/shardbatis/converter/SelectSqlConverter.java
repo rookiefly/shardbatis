@@ -90,6 +90,7 @@ public class SelectSqlConverter extends AbstractSqlConverter {
             this.mapperId = mapperId;
         }
 
+        @Override
         @SuppressWarnings("unchecked")
         public void visit(PlainSelect plainSelect) {
             plainSelect.getFromItem().accept(this);
@@ -106,6 +107,7 @@ public class SelectSqlConverter extends AbstractSqlConverter {
 
         }
 
+        @Override
         @SuppressWarnings("unchecked")
         public void visit(Union union) {
             for (Iterator iter = union.getPlainSelects().iterator(); iter
@@ -115,6 +117,7 @@ public class SelectSqlConverter extends AbstractSqlConverter {
             }
         }
 
+        @Override
         public void visit(Table tableName) {
             String table = tableName.getName();
             table = convertTableName(table, params, mapperId);
@@ -122,102 +125,128 @@ public class SelectSqlConverter extends AbstractSqlConverter {
             tableName.setName(table);
         }
 
+        @Override
         public void visit(SubSelect subSelect) {
             subSelect.getSelectBody().accept(this);
         }
 
+        @Override
         public void visit(Addition addition) {
             visitBinaryExpression(addition);
         }
 
+        @Override
         public void visit(AndExpression andExpression) {
             visitBinaryExpression(andExpression);
         }
 
+        @Override
         public void visit(Between between) {
             between.getLeftExpression().accept(this);
             between.getBetweenExpressionStart().accept(this);
             between.getBetweenExpressionEnd().accept(this);
         }
 
+        @Override
         public void visit(Column tableColumn) {
         }
 
+        @Override
         public void visit(Division division) {
             visitBinaryExpression(division);
         }
 
+        @Override
         public void visit(DoubleValue doubleValue) {
         }
 
+        @Override
         public void visit(EqualsTo equalsTo) {
             visitBinaryExpression(equalsTo);
         }
 
+        @Override
         public void visit(Function function) {
         }
 
+        @Override
         public void visit(GreaterThan greaterThan) {
             visitBinaryExpression(greaterThan);
         }
 
+        @Override
         public void visit(GreaterThanEquals greaterThanEquals) {
             visitBinaryExpression(greaterThanEquals);
         }
 
+        @Override
         public void visit(InExpression inExpression) {
             inExpression.getLeftExpression().accept(this);
             inExpression.getItemsList().accept(this);
         }
 
+        @Override
         public void visit(InverseExpression inverseExpression) {
             inverseExpression.getExpression().accept(this);
         }
 
+        @Override
         public void visit(IsNullExpression isNullExpression) {
         }
 
+        @Override
         public void visit(JdbcParameter jdbcParameter) {
         }
 
+        @Override
         public void visit(LikeExpression likeExpression) {
             visitBinaryExpression(likeExpression);
         }
 
+        @Override
         public void visit(ExistsExpression existsExpression) {
             existsExpression.getRightExpression().accept(this);
         }
 
+        @Override
         public void visit(LongValue longValue) {
         }
 
+        @Override
         public void visit(MinorThan minorThan) {
             visitBinaryExpression(minorThan);
         }
 
+        @Override
         public void visit(MinorThanEquals minorThanEquals) {
             visitBinaryExpression(minorThanEquals);
         }
 
+        @Override
         public void visit(Multiplication multiplication) {
             visitBinaryExpression(multiplication);
         }
 
+        @Override
         public void visit(NotEqualsTo notEqualsTo) {
             visitBinaryExpression(notEqualsTo);
         }
 
+        @Override
         public void visit(NullValue nullValue) {
         }
 
+        @Override
         public void visit(OrExpression orExpression) {
             visitBinaryExpression(orExpression);
         }
 
+        @Override
         public void visit(Parenthesis parenthesis) {
             parenthesis.getExpression().accept(this);
         }
 
+        @Override
         public void visit(Subtraction subtraction) {
             visitBinaryExpression(subtraction);
         }
@@ -227,6 +256,7 @@ public class SelectSqlConverter extends AbstractSqlConverter {
             binaryExpression.getRightExpression().accept(this);
         }
 
+        @Override
         @SuppressWarnings("unchecked")
         public void visit(ExpressionList expressionList) {
             for (Iterator iter = expressionList.getExpressions().iterator(); iter
@@ -237,12 +267,15 @@ public class SelectSqlConverter extends AbstractSqlConverter {
 
         }
 
+        @Override
         public void visit(DateValue dateValue) {
         }
 
+        @Override
         public void visit(TimestampValue timestampValue) {
         }
 
+        @Override
         public void visit(TimeValue timeValue) {
         }
 
@@ -253,9 +286,8 @@ public class SelectSqlConverter extends AbstractSqlConverter {
          * net.sf.jsqlparser.expression.ExpressionVisitor#visit(net.sf.jsqlparser
          * .expression.CaseExpression)
          */
+        @Override
         public void visit(CaseExpression caseExpression) {
-            // TODO Auto-generated method stub
-
         }
 
         /*
@@ -265,47 +297,55 @@ public class SelectSqlConverter extends AbstractSqlConverter {
          * net.sf.jsqlparser.expression.ExpressionVisitor#visit(net.sf.jsqlparser
          * .expression.WhenClause)
          */
+        @Override
         public void visit(WhenClause whenClause) {
-            // TODO Auto-generated method stub
-
         }
 
+        @Override
         public void visit(AllComparisonExpression allComparisonExpression) {
             allComparisonExpression.GetSubSelect().getSelectBody().accept(this);
         }
 
+        @Override
         public void visit(AnyComparisonExpression anyComparisonExpression) {
             anyComparisonExpression.GetSubSelect().getSelectBody().accept(this);
         }
 
+        @Override
         public void visit(SubJoin subjoin) {
             subjoin.getLeft().accept(this);
             subjoin.getJoin().getRightItem().accept(this);
         }
 
+        @Override
         public void visit(Concat concat) {
             visitBinaryExpression(concat);
         }
 
+        @Override
         public void visit(Matches matches) {
             visitBinaryExpression(matches);
 
         }
 
+        @Override
         public void visit(BitwiseAnd bitwiseAnd) {
             visitBinaryExpression(bitwiseAnd);
 
         }
 
+        @Override
         public void visit(BitwiseOr bitwiseOr) {
             visitBinaryExpression(bitwiseOr);
 
         }
 
+        @Override
         public void visit(BitwiseXor bitwiseXor) {
             visitBinaryExpression(bitwiseXor);
         }
 
+        @Override
         public void visit(StringValue stringValue) {
         }
     }

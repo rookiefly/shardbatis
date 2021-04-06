@@ -163,9 +163,10 @@ public class ReflectionUtils {
      */
     public static IllegalArgumentException convertToUncheckedException(Exception e) {
         if (e instanceof IllegalAccessException || e instanceof IllegalArgumentException
-                || e instanceof NoSuchMethodException)
+                || e instanceof NoSuchMethodException) {
             return new IllegalArgumentException("Refelction Exception.", e);
-        else
+        } else {
             return new IllegalArgumentException(e);
+        }
     }
 }

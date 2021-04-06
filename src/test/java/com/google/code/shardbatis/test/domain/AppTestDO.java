@@ -1,11 +1,7 @@
-/**
- *
- */
 package com.google.code.shardbatis.test.domain;
 
 /**
  * @author sean.he
- *
  */
 public class AppTestDO {
 

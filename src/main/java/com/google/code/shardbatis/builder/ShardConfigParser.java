@@ -55,6 +55,7 @@ public class ShardConfigParser {
         DefaultHandler handler = new DefaultHandler() {
             private String parentElement;
 
+            @Override
             public void startElement(String uri, String localName,
                                      String qName, Attributes attributes) throws SAXException {
 
@@ -85,6 +86,7 @@ public class ShardConfigParser {
 
             }
 
+            @Override
             public void characters(char ch[], int start, int length) throws SAXException {
                 if ("ignoreList".equals(parentElement)) {
                     configHolder.addIgnoreId(new String(ch, start, length).trim());
@@ -94,16 +96,20 @@ public class ShardConfigParser {
 
             }
 
+            @Override
             public void error(SAXParseException e) throws SAXException {
                 throw e;
             }
 
+            @Override
             public InputSource resolveEntity(String publicId, String systemId)
                     throws IOException, SAXException {
-                if (publicId != null)
+                if (publicId != null) {
                     publicId = publicId.toLowerCase();
-                if (systemId != null)
+                }
+                if (systemId != null) {
                     systemId = systemId.toLowerCase();
+                }
 
                 InputSource source = null;
                 try {

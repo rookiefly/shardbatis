@@ -13,7 +13,6 @@ import org.junit.Test;
 import java.io.Reader;
 
 /**
- * 运行测试前先启H2 TCP Server <br/>
  * 并执行mvn initialize -Pinitdb 进行数据初始化
  *
  * @author sean.he

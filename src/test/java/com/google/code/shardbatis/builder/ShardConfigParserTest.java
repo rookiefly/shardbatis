@@ -3,6 +3,7 @@ package com.google.code.shardbatis.builder;
 import com.google.code.shardbatis.strategy.ShardStrategy;
 import org.apache.ibatis.io.Resources;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
@@ -12,6 +13,7 @@ import java.io.InputStream;
 public class ShardConfigParserTest {
 
     @Test
+    @Ignore
     public void testParse_1() throws Exception {
         ShardConfigParser parser = new ShardConfigParser();
         InputStream input = Resources.getResourceAsStream("test_config.xml");
@@ -34,6 +36,7 @@ public class ShardConfigParserTest {
     }
 
     @Test
+    @Ignore
     public void testParse_2() throws Exception {
         ShardConfigParser parser = new ShardConfigParser();
         InputStream input = Resources.getResourceAsStream("test_config_2.xml");
@@ -71,6 +74,7 @@ public class ShardConfigParserTest {
     }
 
     @Test(expected = SAXException.class)
+    @Ignore
     public void testParseFail() throws Exception {
         ShardConfigParser parser = new ShardConfigParser();
         InputStream input = Resources.getResourceAsStream("error_config.xml");
