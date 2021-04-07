@@ -1,3 +1,4 @@
+[![Maven Central](https://img.shields.io/maven-central/v/com.rookiefly.open.shardbatis/shardbatis.svg?label=Maven%20Central)](https://search.maven.org/artifact/com.rookiefly.open.shardbatis/shardbatis)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/rookiefly/shardbatis)
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 [![Stars](https://img.shields.io/github/stars/rookiefly/shardbatis)](https://img.shields.io/github/stars/rookiefly/shardbatis)
