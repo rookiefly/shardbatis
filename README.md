@@ -12,7 +12,7 @@
 
 3. 分表策略灵活，配置简单；可针对具体业务模块和单个表进行分表设置。
 
-### 添加maven依赖
+### 添加[maven依赖](https://search.maven.org/artifact/com.rookiefly.open.shardbatis/shardbatis/2.2.0/jar)
 
 ```xml
 <dependency>
