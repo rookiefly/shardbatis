@@ -24,3 +24,4 @@ nbdist/
 .nb-gradle/
 
 log/
+h2/sharebatis.h2.db
