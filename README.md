@@ -27,6 +27,9 @@
 
 [ProjectHome](https://github.com/rookiefly/shardbatis/wiki/ProjectHome)
 
+### spring boot集成
+[shardbatis-spring-boot](https://github.com/rookiefly/shardbatis-spring-boot)
+
 ### 其他分库分表中间件推荐列表
 
 - [Sharding-JDBC](https://github.com/apache/incubator-shardingsphere) JDBC extension
