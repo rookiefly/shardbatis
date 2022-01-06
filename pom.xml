@@ -53,7 +53,7 @@
 
         <jdbc.test.driver.groupid>com.h2database</jdbc.test.driver.groupid>
         <jdbc.test.driver.artifactId>h2</jdbc.test.driver.artifactId>
-        <jdbc.test.driver.version>1.2.140</jdbc.test.driver.version>
+        <jdbc.test.driver.version>2.0.206</jdbc.test.driver.version>
         <db.schema.file>src/test/resources/initdb.sql</db.schema.file>
     </properties>
 
